@@ -1,4 +1,4 @@
-const usuarioRepository = require('../repositories/UsarioRepository');
+const usuarioRepository = require('../repositories/UsuarioRepository');
 
 class UsuarioService {
     getAllUsuarios() {

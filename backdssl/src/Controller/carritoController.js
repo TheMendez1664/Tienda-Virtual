@@ -1,5 +1,5 @@
 const express = require('express');
-const carritoService = require('../services/carritoService');
+const carritoService = require('../services/CarritoService');
 const router = express.Router();
 
 router.get('/', async (req, res) => {

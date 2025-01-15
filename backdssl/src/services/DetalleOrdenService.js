@@ -13,6 +13,7 @@ class DetalleOrdenService {
         return detalleOrdenRepository.create(detalleOrdenData);
     }
 
+
     updateDetalleOrden(id, detalleOrdenData) {
         return detalleOrdenRepository.update(id, detalleOrdenData);
     }
