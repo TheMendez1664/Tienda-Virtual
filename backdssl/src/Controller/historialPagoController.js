@@ -1,5 +1,5 @@
 const express = require('express');
-const historialPagoService = require('../services/historialPagoService');
+const historialPagoService = require('../services/HistorialPagoService');
 const router = express.Router();
 
 router.get('/', async (req, res) => {

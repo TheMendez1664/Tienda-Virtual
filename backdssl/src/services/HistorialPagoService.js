@@ -1,6 +1,6 @@
-const historialRepository = require('../repositories/HistorialRepository');
+const historialRepository = require('../repositories/HistorialPagoRepository');
 
-class HistorialService {
+class HistorialPagoService {
     getAllHistoriales() {
         return historialRepository.findAll();
     }
@@ -38,4 +38,4 @@ class HistorialService {
     }
 }
 
-module.exports = new HistorialService();
+module.exports = new HistorialPagoService();
