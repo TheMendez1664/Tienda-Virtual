@@ -40,9 +40,9 @@ app.use('/api/clientes', clienteController);
 app.use('/api/productos', productoController);
 app.use('/api/usuarios', usuarioController);
 app.use('/api/ordenes', ordenController);
-app.use('/api/detalle-ordenes', detalleOrdenController);
+app.use('/api/detalleOrdenes', detalleOrdenController);
 app.use('/api/carrito', carritoController);
-app.use('/api/historial-pagos', historialPagoController);
+app.use('/api/historialPagos', historialPagoController);
 
 // Configurar puerto y arrancar el servidor
 const port = process.env.PORT || 3000;

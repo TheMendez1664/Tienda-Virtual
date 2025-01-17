@@ -6,15 +6,48 @@ class ClienteRepository extends CrudRepository {
         super(Cliente);
     }
 
-    // Métodos específicos de Cliente
+    async findById(id) {
+        try {
+            const sql = `SELECT * FROM ${this.tableName} WHERE id_cliente = ?`;
+            const [rows] = await this.pool.query(sql, [id]);
+            return rows[0] || null;
+        } catch (error) {
+            console.error(`Error en findById (Cliente): ${error.message}`);
+            throw error;
+        }
+    }
+
+    async update(id, data) {
+        try {
+            const sql = `UPDATE ${this.tableName} SET ? WHERE id_cliente = ?`;
+            await this.pool.query(sql, [data, id]);
+            return this.findById(id);
+        } catch (error) {
+            console.error(`Error en update (Cliente): ${error.message}`);
+            throw error;
+        }
+    }
+
+    async delete(id) {
+        try {
+            const sql = `DELETE FROM ${this.tableName} WHERE id_cliente = ?`;
+            const [result] = await this.pool.query(sql, [id]);
+            return result.affectedRows > 0;
+        } catch (error) {
+            console.error(`Error en delete (Cliente): ${error.message}`);
+            throw error;
+        }
+    }
+
+    // Ejemplo de método específico
     async findByEmail(correo) {
         try {
             const [rows] = await this.pool.query(`
-                SELECT * FROM ${Cliente.tableName} WHERE correo = ?
+                SELECT * FROM ${this.tableName} WHERE correo = ?
             `, [correo]);
             return rows[0] || null;
         } catch (error) {
-            console.error(`Error en findByEmail para Cliente: ${error.message}`);
+            console.error(`Error en findByEmail (Cliente): ${error.message}`);
             throw error;
         }
     }

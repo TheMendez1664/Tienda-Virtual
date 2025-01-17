@@ -11,9 +11,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id_categoria', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const categoria = await categoriaService.getCategoriaById(req.params.id_categoria);
+        const categoria = await categoriaService.getCategoriaById(req.params.id);
         if (!categoria) {
             return res.status(404).json({ message: 'Categoría no encontrada' });
         }
@@ -32,25 +32,25 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id_categoria', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
-        const updated = await categoriaService.updateCategoria(req.params.id_categoria, req.body);
-        if (!updated) {
+        const updatedCategoria = await categoriaService.updateCategoria(req.params.id, req.body);
+        if (!updatedCategoria) {
             return res.status(404).json({ message: 'Categoría no encontrada' });
         }
-        res.json(updated);
+        res.json(updatedCategoria);
     } catch (error) {
         res.status(500).json({ message: 'Error al actualizar la categoría', error: error.message });
     }
 });
 
-router.delete('/:id_categoria', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        const deleted = await categoriaService.deleteCategoria(req.params.id_categoria);
-        if (!deleted) {
-            return res.status(404).json({ message: 'Categoría no encontrada' });
+        const deleted = await categoriaService.deleteCategoria(req.params.id);
+        if (deleted) {
+            return res.status(200).json({ message: 'Categoría eliminada con éxito' });
         }
-        res.status(200).json({ message: 'Categoría eliminada con éxito' });
+        res.status(404).json({ message: 'Categoría no encontrada' });
     } catch (error) {
         res.status(500).json({ message: 'Error al eliminar la categoría', error: error.message });
     }

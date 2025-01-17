@@ -14,11 +14,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const carrito = await carritoService.getCarritoById(req.params.id);
-        if (carrito) {
-            res.json(carrito);
-        } else {
-            res.status(404).json({ message: 'Carrito no encontrado' });
+        if (!carrito) {
+            return res.status(404).json({ message: 'Carrito no encontrado' });
         }
+        res.json(carrito);
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener el carrito', error: error.message });
     }
@@ -39,11 +38,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const updatedCarrito = await carritoService.updateCarrito(req.params.id, req.body);
-        if (updatedCarrito) {
-            res.json(updatedCarrito);
-        } else {
-            res.status(404).json({ message: 'Carrito no encontrado' });
+        if (!updatedCarrito) {
+            return res.status(404).json({ message: 'Carrito no encontrado' });
         }
+        res.json(updatedCarrito);
     } catch (error) {
         res.status(500).json({ message: 'Error al actualizar el carrito', error: error.message });
     }

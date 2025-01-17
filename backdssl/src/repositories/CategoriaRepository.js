@@ -6,7 +6,8 @@ class CategoriaRepository extends CrudRepository {
         super(Categoria);
     }
 
-        async findById(id) {
+    // Sobrescribimos findById
+    async findById(id) {
         try {
             const sql = `SELECT * FROM ${this.tableName} WHERE id_categoria = ?`;
             const [rows] = await this.pool.query(sql, [id]);
@@ -17,6 +18,7 @@ class CategoriaRepository extends CrudRepository {
         }
     }
 
+    // Sobrescribimos update
     async update(id, data) {
         try {
             const sql = `UPDATE ${this.tableName} SET ? WHERE id_categoria = ?`;
@@ -28,6 +30,7 @@ class CategoriaRepository extends CrudRepository {
         }
     }
 
+    // Sobrescribimos delete
     async delete(id) {
         try {
             const sql = `DELETE FROM ${this.tableName} WHERE id_categoria = ?`;
@@ -39,6 +42,7 @@ class CategoriaRepository extends CrudRepository {
         }
     }
 
+    // Método específico
     async findByName(nombre_categoria) {
         try {
             const [rows] = await this.pool.query(`
@@ -46,7 +50,7 @@ class CategoriaRepository extends CrudRepository {
             `, [nombre_categoria]);
             return rows[0] || null;
         } catch (error) {
-            console.error(`Error en findByName para Categoria: ${error.message}`);
+            console.error(`Error en findByName (Categoria): ${error.message}`);
             throw error;
         }
     }

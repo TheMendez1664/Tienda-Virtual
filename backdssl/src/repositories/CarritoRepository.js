@@ -3,14 +3,15 @@ const Carrito = require('../models/Carrito');
 
 class CarritoRepository extends CrudRepository {
     constructor() {
-        super(Carrito);  
+        // Llamamos al constructor padre sin modificar CrudRepository
+        super(Carrito);
     }
 
-        async findById(id) {
+    // Sobrescribimos findById
+    async findById(id) {
         try {
-            const [rows] = await this.pool.query(`
-                SELECT * FROM ${this.tableName} WHERE id_carrito = ?
-            `, [id]);
+            const sql = `SELECT * FROM ${this.tableName} WHERE id_carrito = ?`;
+            const [rows] = await this.pool.query(sql, [id]);
             return rows[0] || null;
         } catch (error) {
             console.error(`Error en findById (Carrito): ${error.message}`);
@@ -18,7 +19,8 @@ class CarritoRepository extends CrudRepository {
         }
     }
 
-        async update(id, data) {
+    // Sobrescribimos update
+    async update(id, data) {
         try {
             const sql = `UPDATE ${this.tableName} SET ? WHERE id_carrito = ?`;
             await this.pool.query(sql, [data, id]);
@@ -29,7 +31,8 @@ class CarritoRepository extends CrudRepository {
         }
     }
 
-        async delete(id) {
+    // Sobrescribimos delete
+    async delete(id) {
         try {
             const sql = `DELETE FROM ${this.tableName} WHERE id_carrito = ?`;
             const [result] = await this.pool.query(sql, [id]);
@@ -40,6 +43,7 @@ class CarritoRepository extends CrudRepository {
         }
     }
 
+    // Métodos específicos
     async findByClient(clienteId) {
         try {
             const [rows] = await this.pool.query(`
