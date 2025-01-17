@@ -8,10 +8,15 @@ class HistorialPagoRepository extends CrudRepository {
 
     // Métodos específicos de Historial de Pago
     async findByOrder(ordenId) {
-        const [rows] = await this.pool.query(`
-            SELECT * FROM ${HistorialPago.tableName} WHERE orden_id = ?
-        `, [ordenId]);
-        return rows;
+        try {
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${HistorialPago.tableName} WHERE orden_id = ?
+            `, [ordenId]);
+            return rows;
+        } catch (error) {
+            console.error(`Error en findByOrder para HistorialPago: ${error.message}`);
+            throw error;
+        }
     }
 }
 

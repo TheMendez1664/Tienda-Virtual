@@ -8,17 +8,27 @@ class UsuarioRepository extends CrudRepository {
 
     // Métodos específicos de Usuario
     async findByRole(role) {
-        const [rows] = await this.pool.query(`
-            SELECT * FROM ${Usuario.tableName} WHERE rol = ?
-        `, [role]);
-        return rows;
+        try {
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${Usuario.tableName} WHERE rol = ?
+            `, [role]);
+            return rows;
+        } catch (error) {
+            console.error(`Error en findByRole para Usuario: ${error.message}`);
+            throw error;
+        }
     }
 
     async findByEmail(email) {
-        const [rows] = await this.pool.query(`
-            SELECT * FROM ${Usuario.tableName} WHERE correo = ?
-        `, [email]);
-        return rows[0] || null;
+        try {
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${Usuario.tableName} WHERE correo = ?
+            `, [email]);
+            return rows[0] || null;
+        } catch (error) {
+            console.error(`Error en findByEmail para Usuario: ${error.message}`);
+            throw error;
+        }
     }
 }
 

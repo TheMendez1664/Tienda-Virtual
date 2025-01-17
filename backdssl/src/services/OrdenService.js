@@ -1,24 +1,36 @@
 const ordenRepository = require('../repositories/OrdenRepository');
 
 class OrdenService {
-    getAllOrdenes() {
-        return ordenRepository.findAll();
+    async getAllOrdenes() {
+        return await ordenRepository.findAll();
     }
 
-    getOrdenById(id) {
-        return ordenRepository.findById(id);
+    async getOrdenById(id) {
+        const orden = await ordenRepository.findById(id);
+        if (!orden) {
+            throw new Error('Orden no encontrada');
+        }
+        return orden;
     }
 
-    createOrden(ordenData) {
-        return ordenRepository.create(ordenData);
+    async createOrden(ordenData) {
+        return await ordenRepository.create(ordenData);
     }
 
-    updateOrden(id, ordenData) {
-        return ordenRepository.update(id, ordenData);
+    async updateOrden(id, ordenData) {
+        const ordenExistente = await ordenRepository.findById(id);
+        if (!ordenExistente) {
+            throw new Error('Orden no encontrada');
+        }
+        return await ordenRepository.update(id, ordenData);
     }
 
-    deleteOrden(id) {
-        return ordenRepository.delete(id);
+    async deleteOrden(id) {
+        const ordenExistente = await ordenRepository.findById(id);
+        if (!ordenExistente) {
+            throw new Error('Orden no encontrada');
+        }
+        return await ordenRepository.delete(id);
     }
 
     async getOrdenesByCliente(clienteId) {

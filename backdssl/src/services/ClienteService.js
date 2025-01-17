@@ -1,24 +1,36 @@
 const clienteRepository = require('../repositories/ClienteRepository');
 
 class ClienteService {
-    getAllClientes() {
-        return clienteRepository.findAll();
+    async getAllClientes() {
+        return await clienteRepository.findAll();
     }
 
-    getClienteById(id) {
-        return clienteRepository.findById(id);
+    async getClienteById(id) {
+        const cliente = await clienteRepository.findById(id);
+        if (!cliente) {
+            throw new Error('Cliente no encontrado');
+        }
+        return cliente;
     }
 
-    createCliente(clienteData) {
-        return clienteRepository.create(clienteData);
+    async createCliente(clienteData) {
+        return await clienteRepository.create(clienteData);
     }
 
-    updateCliente(id, clienteData) {
-        return clienteRepository.update(id, clienteData);
+    async updateCliente(id, clienteData) {
+        const clienteExistente = await clienteRepository.findById(id);
+        if (!clienteExistente) {
+            throw new Error('Cliente no encontrado');
+        }
+        return await clienteRepository.update(id, clienteData);
     }
 
-    deleteCliente(id) {
-        return clienteRepository.delete(id);
+    async deleteCliente(id) {
+        const clienteExistente = await clienteRepository.findById(id);
+        if (!clienteExistente) {
+            throw new Error('Cliente no encontrado');
+        }
+        return await clienteRepository.delete(id);
     }
 
     async getClienteByEmail(correo) {

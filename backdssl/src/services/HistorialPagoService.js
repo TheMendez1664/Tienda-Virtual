@@ -1,24 +1,36 @@
 const historialRepository = require('../repositories/HistorialPagoRepository');
 
 class HistorialPagoService {
-    getAllHistoriales() {
-        return historialRepository.findAll();
+    async getAllHistoriales() {
+        return await historialRepository.findAll();
     }
 
-    getHistorialById(id) {
-        return historialRepository.findById(id);
+    async getHistorialById(id) {
+        const historial = await historialRepository.findById(id);
+        if (!historial) {
+            throw new Error('Historial de pago no encontrado');
+        }
+        return historial;
     }
 
-    createHistorial(historialData) {
-        return historialRepository.create(historialData);
+    async createHistorial(historialData) {
+        return await historialRepository.create(historialData);
     }
 
-    updateHistorial(id, historialData) {
-        return historialRepository.update(id, historialData);
+    async updateHistorial(id, historialData) {
+        const historialExistente = await historialRepository.findById(id);
+        if (!historialExistente) {
+            throw new Error('Historial de pago no encontrado');
+        }
+        return await historialRepository.update(id, historialData);
     }
 
-    deleteHistorial(id) {
-        return historialRepository.delete(id);
+    async deleteHistorial(id) {
+        const historialExistente = await historialRepository.findById(id);
+        if (!historialExistente) {
+            throw new Error('Historial de pago no encontrado');
+        }
+        return await historialRepository.delete(id);
     }
 
     async getHistorialByUsuario(usuarioId) {

@@ -3,6 +3,7 @@ const helmet = require('helmet');
 require('dotenv').config();
 
 // Importar controladores
+// Ajusta el path según el nombre real de tu carpeta de controladores ("Controller" o "controllers")
 const categoriaController = require('./Controller/CategoriaController');
 const clienteController = require('./Controller/ClienteController');
 const productoController = require('./Controller/ProductoController');
@@ -25,22 +26,23 @@ app.use(
 
 // Configurar CORS
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); 
-  // Ajusta esto según tu configuración
+  // Ajusta "Access-Control-Allow-Origin" con la URL de tu frontend, si la conoces
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
 
 // Configurar rutas
-app.use('/api/Categorias', categoriaController);
-app.use('/api/Clientes', clienteController);
-app.use('/api/Productos', productoController);
-app.use('/api/Usuarios', usuarioController);
-app.use('/api/Ordenes', ordenController);
-app.use('/api/DetalleOrdenes', detalleOrdenController);
-app.use('/api/Carrito', carritoController);
-app.use('/api/HistorialPagos', historialPagoController);
+// Se sugiere usar nombres de rutas en minúsculas y consistentes
+app.use('/api/categorias', categoriaController);
+app.use('/api/clientes', clienteController);
+app.use('/api/productos', productoController);
+app.use('/api/usuarios', usuarioController);
+app.use('/api/ordenes', ordenController);
+app.use('/api/detalle-ordenes', detalleOrdenController);
+app.use('/api/carrito', carritoController);
+app.use('/api/historial-pagos', historialPagoController);
 
 // Configurar puerto y arrancar el servidor
 const port = process.env.PORT || 3000;

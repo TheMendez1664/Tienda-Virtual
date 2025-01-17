@@ -1,6 +1,6 @@
+// lib/CrudRepository.js
 const mysql = require('mysql2/promise');
 
-// Configuración del pool de conexión
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -19,59 +19,29 @@ class CrudRepository {
         this.pool = pool;
     }
 
-    // Obtener todos los registros
     async findAll() {
-        try {
-            const [rows] = await this.pool.query(`SELECT * FROM ${this.tableName}`);
-            return rows;
-        } catch (error) {
-            console.error(`Error en findAll: ${error.message}`);
-            throw error;
-        }
+        const [rows] = await this.pool.query(`SELECT * FROM ${this.tableName}`);
+        return rows;
     }
 
-    // Obtener un registro por ID
     async findById(id) {
-        try {
-            const [rows] = await this.pool.query(`SELECT * FROM ${this.tableName} WHERE id = ?`, [id]);
-            return rows[0];
-        } catch (error) {
-            console.error(`Error en findById: ${error.message}`);
-            throw error;
-        }
+        const [rows] = await this.pool.query(`SELECT * FROM ${this.tableName} WHERE id = ?`, [id]);
+        return rows[0];
     }
 
-    // Crear un nuevo registro
     async create(data) {
-        try {
-            const [result] = await this.pool.query(`INSERT INTO ${this.tableName} SET ?`, data);
-            return { id: result.insertId, ...data };
-        } catch (error) {
-            console.error(`Error en create: ${error.message}`);
-            throw error;
-        }
+        const [result] = await this.pool.query(`INSERT INTO ${this.tableName} SET ?`, data);
+        return { id: result.insertId, ...data };
     }
 
-    // Actualizar un registro existente
     async update(id, data) {
-        try {
-            await this.pool.query(`UPDATE ${this.tableName} SET ? WHERE id = ?`, [data, id]);
-            return this.findById(id);
-        } catch (error) {
-            console.error(`Error en update: ${error.message}`);
-            throw error;
-        }
+        await this.pool.query(`UPDATE ${this.tableName} SET ? WHERE id = ?`, [data, id]);
+        return this.findById(id);
     }
 
-    // Eliminar un registro
     async delete(id) {
-        try {
-            const [result] = await this.pool.query(`DELETE FROM ${this.tableName} WHERE id = ?`, [id]);
-            return result.affectedRows > 0;
-        } catch (error) {
-            console.error(`Error en delete: ${error.message}`);
-            throw error;
-        }
+        const [result] = await this.pool.query(`DELETE FROM ${this.tableName} WHERE id = ?`, [id]);
+        return result.affectedRows > 0;
     }
 }
 

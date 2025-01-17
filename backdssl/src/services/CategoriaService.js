@@ -1,32 +1,40 @@
 const categoriaRepository = require('../repositories/CategoriaRepository');
 
 class CategoriaService {
-    getAllCategorias() {
+    async getAllCategorias() {
         return categoriaRepository.findAll();
     }
 
-    getCategoriaById(id) {
-        return categoriaRepository.findById(id);
-    }
-
-    createCategoria(categoriaData) {
-        return categoriaRepository.create(categoriaData);
-    }
-
-    updateCategoria(id, categoriaData) {
-        return categoriaRepository.update(id, categoriaData);
-    }
-
-    deleteCategoria(id) {
-        return categoriaRepository.delete(id);
-    }
-
-    async getCategoriaByName(nombre_categoria) {
-        const categoria = await categoriaRepository.findByName(nombre_categoria);
+    async getCategoriaById(id) {
+        const categoria = await categoriaRepository.findById(id);
         if (!categoria) {
             throw new Error('Categoría no encontrada');
         }
         return categoria;
+    }
+
+    async createCategoria(data) {
+        return categoriaRepository.create(data);
+    }
+
+    async updateCategoria(id, data) {
+        const categoriaExistente = await categoriaRepository.findById(id);
+        if (!categoriaExistente) {
+            throw new Error('Categoría no encontrada');
+        }
+        return categoriaRepository.update(id, data);
+    }
+
+    async deleteCategoria(id) {
+        const categoriaExistente = await categoriaRepository.findById(id);
+        if (!categoriaExistente) {
+            throw new Error('Categoría no encontrada');
+        }
+        return categoriaRepository.delete(id);
+    }
+
+    async getCategoriaByName(nombre_categoria) {
+        return categoriaRepository.findByName(nombre_categoria);
     }
 }
 

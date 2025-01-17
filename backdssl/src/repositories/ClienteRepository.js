@@ -8,10 +8,15 @@ class ClienteRepository extends CrudRepository {
 
     // Métodos específicos de Cliente
     async findByEmail(correo) {
-        const [rows] = await this.pool.query(`
-            SELECT * FROM ${Cliente.tableName} WHERE correo = ?
-        `, [correo]);
-        return rows[0] || null;
+        try {
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${Cliente.tableName} WHERE correo = ?
+            `, [correo]);
+            return rows[0] || null;
+        } catch (error) {
+            console.error(`Error en findByEmail para Cliente: ${error.message}`);
+            throw error;
+        }
     }
 }
 

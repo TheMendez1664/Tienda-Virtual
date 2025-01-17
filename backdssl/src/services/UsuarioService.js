@@ -1,24 +1,36 @@
 const usuarioRepository = require('../repositories/UsuarioRepository');
 
 class UsuarioService {
-    getAllUsuarios() {
-        return usuarioRepository.findAll();
+    async getAllUsuarios() {
+        return await usuarioRepository.findAll();
     }
 
-    getUsuarioById(id) {
-        return usuarioRepository.findById(id);
+    async getUsuarioById(id) {
+        const usuario = await usuarioRepository.findById(id);
+        if (!usuario) {
+            throw new Error('Usuario no encontrado');
+        }
+        return usuario;
     }
 
-    createUsuario(usuarioData) {
-        return usuarioRepository.create(usuarioData);
+    async createUsuario(usuarioData) {
+        return await usuarioRepository.create(usuarioData);
     }
 
-    updateUsuario(id, usuarioData) {
-        return usuarioRepository.update(id, usuarioData);
+    async updateUsuario(id, usuarioData) {
+        const usuarioExistente = await usuarioRepository.findById(id);
+        if (!usuarioExistente) {
+            throw new Error('Usuario no encontrado');
+        }
+        return await usuarioRepository.update(id, usuarioData);
     }
 
-    deleteUsuario(id) {
-        return usuarioRepository.delete(id);
+    async deleteUsuario(id) {
+        const usuarioExistente = await usuarioRepository.findById(id);
+        if (!usuarioExistente) {
+            throw new Error('Usuario no encontrado');
+        }
+        return await usuarioRepository.delete(id);
     }
 
     async getUsuariosByRole(rol) {

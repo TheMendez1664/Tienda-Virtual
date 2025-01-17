@@ -1,36 +1,52 @@
 const carritoRepository = require('../repositories/CarritoRepository');
 
 class CarritoService {
-    getAllCarritos() {
-        return carritoRepository.findAll();
+    async getAllCarritos() {
+        return await carritoRepository.findAll();
     }
 
-    getCarritoById(id) {
-        return carritoRepository.findById(id);
+    async getCarritoById(id) {
+        const carrito = await carritoRepository.findById(id);
+        if (!carrito) {
+            throw new Error('Carrito no encontrado');
+        }
+        return carrito;
     }
 
-    createCarrito(carritoData) {
-        return carritoRepository.create(carritoData);
+    async createCarrito(carritoData) {
+        return await carritoRepository.create(carritoData);
     }
 
-    updateCarrito(id, carritoData) {
-        return carritoRepository.update(id, carritoData);
+    async updateCarrito(id, carritoData) {
+        const carritoExistente = await carritoRepository.findById(id);
+        if (!carritoExistente) {
+            throw new Error('Carrito no encontrado');
+        }
+        return await carritoRepository.update(id, carritoData);
     }
 
-    deleteCarrito(id) {
-        return carritoRepository.delete(id);
+    async deleteCarrito(id) {
+        const carritoExistente = await carritoRepository.findById(id);
+        if (!carritoExistente) {
+            throw new Error('Carrito no encontrado');
+        }
+        return await carritoRepository.delete(id);
     }
 
     async getCarritoByCliente(clienteId) {
         const carrito = await carritoRepository.findByClient(clienteId);
-        if (!carrito.length) {
+        if (!carrito || carrito.length === 0) {
             throw new Error('Carrito no encontrado');
         }
         return carrito;
     }
 
     async clearCarrito(clienteId) {
-        return carritoRepository.clearCart(clienteId);
+        const carrito = await carritoRepository.findByClient(clienteId);
+        if (!carrito || carrito.length === 0) {
+            throw new Error('No hay carrito para limpiar');
+        }
+        return await carritoRepository.clearCart(clienteId);
     }
 }
 

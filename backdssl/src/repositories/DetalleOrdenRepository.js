@@ -8,10 +8,15 @@ class DetalleOrdenRepository extends CrudRepository {
 
     // Métodos específicos de Detalle de Orden
     async findByOrder(ordenId) {
-        const [rows] = await this.pool.query(`
-            SELECT * FROM ${DetalleOrden.tableName} WHERE orden_id = ?
-        `, [ordenId]);
-        return rows;
+        try {
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${DetalleOrden.tableName} WHERE orden_id = ?
+            `, [ordenId]);
+            return rows;
+        } catch (error) {
+            console.error(`Error en findByOrder para DetalleOrden: ${error.message}`);
+            throw error;
+        }
     }
 }
 

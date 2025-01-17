@@ -1,24 +1,36 @@
 const productoRepository = require('../repositories/ProductoRepository');
 
 class ProductoService {
-    getAllProductos() {
-        return productoRepository.findAll();
+    async getAllProductos() {
+        return await productoRepository.findAll();
     }
 
-    getProductoById(id) {
-        return productoRepository.findById(id);
+    async getProductoById(id) {
+        const producto = await productoRepository.findById(id);
+        if (!producto) {
+            throw new Error('Producto no encontrado');
+        }
+        return producto;
     }
 
-    createProducto(productoData) {
-        return productoRepository.create(productoData);
+    async createProducto(productoData) {
+        return await productoRepository.create(productoData);
     }
 
-    updateProducto(id, productoData) {
-        return productoRepository.update(id, productoData);
+    async updateProducto(id, productoData) {
+        const productoExistente = await productoRepository.findById(id);
+        if (!productoExistente) {
+            throw new Error('Producto no encontrado');
+        }
+        return await productoRepository.update(id, productoData);
     }
 
-    deleteProducto(id) {
-        return productoRepository.delete(id);
+    async deleteProducto(id) {
+        const productoExistente = await productoRepository.findById(id);
+        if (!productoExistente) {
+            throw new Error('Producto no encontrado');
+        }
+        return await productoRepository.delete(id);
     }
 
     async getProductosByCategory(categoria_id) {
@@ -30,7 +42,7 @@ class ProductoService {
     }
 
     async updateStock(productId, newStock) {
-        return productoRepository.updateStock(productId, newStock);
+        return await productoRepository.updateStock(productId, newStock);
     }
 }
 

@@ -1,25 +1,36 @@
 const detalleOrdenRepository = require('../repositories/DetalleOrdenRepository');
 
 class DetalleOrdenService {
-    getAllDetallesOrden() {
-        return detalleOrdenRepository.findAll();
+    async getAllDetallesOrden() {
+        return await detalleOrdenRepository.findAll();
     }
 
-    getDetalleOrdenById(id) {
-        return detalleOrdenRepository.findById(id);
+    async getDetalleOrdenById(id) {
+        const detalle = await detalleOrdenRepository.findById(id);
+        if (!detalle) {
+            throw new Error('Detalle de orden no encontrado');
+        }
+        return detalle;
     }
 
-    createDetalleOrden(detalleOrdenData) {
-        return detalleOrdenRepository.create(detalleOrdenData);
+    async createDetalleOrden(detalleOrdenData) {
+        return await detalleOrdenRepository.create(detalleOrdenData);
     }
 
-
-    updateDetalleOrden(id, detalleOrdenData) {
-        return detalleOrdenRepository.update(id, detalleOrdenData);
+    async updateDetalleOrden(id, detalleOrdenData) {
+        const detalleExistente = await detalleOrdenRepository.findById(id);
+        if (!detalleExistente) {
+            throw new Error('Detalle de orden no encontrado');
+        }
+        return await detalleOrdenRepository.update(id, detalleOrdenData);
     }
 
-    deleteDetalleOrden(id) {
-        return detalleOrdenRepository.delete(id);
+    async deleteDetalleOrden(id) {
+        const detalleExistente = await detalleOrdenRepository.findById(id);
+        if (!detalleExistente) {
+            throw new Error('Detalle de orden no encontrado');
+        }
+        return await detalleOrdenRepository.delete(id);
     }
 
     async getDetallesByOrden(ordenId) {
