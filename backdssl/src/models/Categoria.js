@@ -1,5 +1,5 @@
 class Categoria {
-    static tableName = 'categorias';
+    static tableName = 'Categorias';
 
     constructor(id_categoria, nombre_categoria, descripcion) {
         this.id_categoria = id_categoria;

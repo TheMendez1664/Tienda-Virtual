@@ -1,5 +1,5 @@
 class HistorialPago {
-    static tableName = 'historial_pagos';
+    static tableName = 'HistorialPagos';
 
     constructor(id_pago, orden_id, fecha_pago, monto, metodo_pago) {
         this.id_pago = id_pago;

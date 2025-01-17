@@ -1,5 +1,5 @@
 class Orden {
-    static tableName = 'ordenes';
+    static tableName = 'Ordenes';
 
     constructor(id_orden, cliente_id, fecha_orden, estado, total) {
         this.id_orden = id_orden;

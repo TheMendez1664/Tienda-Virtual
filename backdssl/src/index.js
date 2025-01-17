@@ -33,14 +33,14 @@ app.use((req, res, next) => {
 });
 
 // Configurar rutas
-app.use('/api/categorias', categoriaController);
-app.use('/api/clientes', clienteController);
-app.use('/api/productos', productoController);
-app.use('/api/usuarios', usuarioController);
-app.use('/api/ordenes', ordenController);
-app.use('/api/detalle-ordenes', detalleOrdenController);
-app.use('/api/carrito', carritoController);
-app.use('/api/historial-pagos', historialPagoController);
+app.use('/api/Categorias', categoriaController);
+app.use('/api/Clientes', clienteController);
+app.use('/api/Productos', productoController);
+app.use('/api/Usuarios', usuarioController);
+app.use('/api/Ordenes', ordenController);
+app.use('/api/DetalleOrdenes', detalleOrdenController);
+app.use('/api/Carrito', carritoController);
+app.use('/api/HistorialPagos', historialPagoController);
 
 // Configurar puerto y arrancar el servidor
 const port = process.env.PORT || 3000;

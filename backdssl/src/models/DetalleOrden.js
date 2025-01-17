@@ -1,5 +1,5 @@
 class DetalleOrden {
-    static tableName = 'detalles_ordenes';
+    static tableName = 'DetallesOrden';
 
     constructor(id_detalle, orden_id, producto_id, cantidad, precio_unitario, subtotal) {
         this.id_detalle = id_detalle;

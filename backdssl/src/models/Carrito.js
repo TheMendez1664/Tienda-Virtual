@@ -1,5 +1,5 @@
 class Carrito {
-    static tableName = 'carrito_compras';
+    static tableName = 'CarritoCompras';
 
     constructor(id_carrito, cliente_id, producto_id, cantidad) {
         this.id_carrito = id_carrito;

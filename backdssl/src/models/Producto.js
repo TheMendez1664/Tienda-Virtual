@@ -1,5 +1,5 @@
 class Producto {
-    static tableName = 'productos';
+    static tableName = 'Productos';
 
     constructor(id_producto, nombre_producto, descripcion, precio, stock, imagen, categoria_id) {
         this.id_producto = id_producto;

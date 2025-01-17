@@ -1,5 +1,5 @@
 class Cliente {
-    static tableName = 'clientes';
+    static tableName = 'Clientes';
 
     constructor(id_cliente, nombre, apellido, correo, telefono, direccion, fecha_registro) {
         this.id_cliente = id_cliente;

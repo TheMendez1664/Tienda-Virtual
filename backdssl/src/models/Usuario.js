@@ -1,5 +1,5 @@
 class Usuario {
-    static tableName = 'usuarios';
+    static tableName = 'Usuarios';
 
     constructor(id_usuario, nombre_usuario, contraseña, rol, correo, fecha_registro) {
         this.id_usuario = id_usuario;
