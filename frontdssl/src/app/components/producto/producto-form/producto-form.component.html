@@ -6,7 +6,7 @@
     <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
             <label for="nombre_producto" class="form-label">Nombre del Producto</label>
-            <input type="text" class="form-control" id="nombre_producto" formControlName="nombre_producto" [ngClass]="{'is-invalid': submitted && f['nombre_producto'].errors}">
+            <input type="text" class="form-control" id="nombre_producto" formControlName="nombre_producto"[ngClass]="{ 'is-invalid': submitted && f['nombre_producto'].errors }"/>
             <div *ngIf="submitted && f['nombre_producto'].errors" class="invalid-feedback">El nombre del producto es requerido</div>
         </div>
         <div class="mb-3">
@@ -15,12 +15,20 @@
         </div>
         <div class="mb-3">
             <label for="precio" class="form-label">Precio</label>
-            <input type="number" class="form-control" id="precio" formControlName="precio" [ngClass]="{'is-invalid': submitted && f['precio'].errors}">
+            <input type="number" class="form-control" id="precio" formControlName="precio" [ngClass]="{ 'is-invalid': submitted && f['precio'].errors }"/>
             <div *ngIf="submitted && f['precio'].errors" class="invalid-feedback">El precio es requerido y debe ser mayor o igual a 0</div>
         </div>
         <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="stock" formControlName="stock" [ngClass]="{ 'is-invalid': submitted && f['stock'].errors }"/>
+            <div *ngIf="submitted && f['stock'].errors" class="invalid-feedback">
+                <div *ngIf="f['stock'].errors['required']">El stock es requerido</div>
+                <div *ngIf="f['stock'].errors['min']">El stock no puede ser negativo</div>
+            </div>
+        </div>
+        <div class="mb-3">
             <label for="categoria_id" class="form-label">Categoría</label>
-            <select class="form-control" id="categoria_id" formControlName="categoria_id" [ngClass]="{'is-invalid': submitted && f['categoria_id'].errors}">
+            <select class="form-control" id="categoria_id" formControlName="categoria_id" [ngClass]="{ 'is-invalid': submitted && f['categoria_id'].errors }">
                 <option value="" disabled>Seleccione una categoría</option>
                 <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.nombre_categoria }}</option>
             </select>
