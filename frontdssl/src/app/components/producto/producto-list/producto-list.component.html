@@ -1,0 +1,28 @@
+<div class="container">
+    <h3>Gestión de Productos</h3>
+    <button class="btn btn-primary mb-3" (click)="openProductoModal()">Agregar Nuevo Producto</button>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let producto of productos">
+                <td>{{ producto.nombre_producto }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="editarProducto(producto)">Editar</button>
+                    <button class="btn btn-danger" (click)="eliminarProducto(producto.id_producto)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,23 @@
+<div class="container">
+    <h3>Gestión de Categorías</h3>
+    <button class="btn btn-primary mb-3" (click)="openCategoriaModal()">Agregar Nueva Categoría</button>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let categoria of categorias">
+                <td>{{ categoria.nombre_categoria }}</td>
+                <td>{{ categoria.descripcion }}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="editarCategoria(categoria)">Editar</button>
+                    <button class="btn btn-danger" (click)="eliminarCategoria(categoria.id_categoria)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
