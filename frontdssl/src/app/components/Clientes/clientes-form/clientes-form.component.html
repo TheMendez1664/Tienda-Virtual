@@ -6,28 +6,40 @@
   <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="nombre" formControlName="nombre" [ngClass]="{'is-invalid': submitted && f['nombre'].errors}">
-      <div *ngIf="submitted && f['nombre'].errors" class="invalid-feedback">El nombre es requerido</div>
+      <input type="text" class="form-control" id="nombre" formControlName="nombre"
+             [ngClass]="{'is-invalid': submitted && f['nombre'].errors}">
+      <div *ngIf="submitted && f['nombre'].errors" class="invalid-feedback">El nombre es requerido.</div>
     </div>
     <div class="mb-3">
       <label for="apellido" class="form-label">Apellido</label>
-      <input type="text" class="form-control" id="apellido" formControlName="apellido" [ngClass]="{'is-invalid': submitted && f['apellido'].errors}">
-      <div *ngIf="submitted && f['apellido'].errors" class="invalid-feedback">El apellido es requerido</div>
+      <input type="text" class="form-control" id="apellido" formControlName="apellido"
+             [ngClass]="{'is-invalid': submitted && f['apellido'].errors}">
+      <div *ngIf="submitted && f['apellido'].errors" class="invalid-feedback">El apellido es requerido.</div>
     </div>
     <div class="mb-3">
       <label for="correo" class="form-label">Correo</label>
-      <input type="email" class="form-control" id="correo" formControlName="correo" [ngClass]="{'is-invalid': submitted && f['correo'].errors}">
-      <div *ngIf="submitted && f['correo'].errors" class="invalid-feedback">El correo es requerido y debe ser válido</div>
+      <input type="email" class="form-control" id="correo" formControlName="correo"
+             [ngClass]="{'is-invalid': submitted && f['correo'].errors}">
+      <div *ngIf="submitted && f['correo'].errors" class="invalid-feedback">
+        <div *ngIf="f['correo'].errors['required']">El correo es requerido.</div>
+        <div *ngIf="f['correo'].errors['email']">Debe ingresar un correo válido.</div>
+      </div>
     </div>
     <div class="mb-3">
       <label for="telefono" class="form-label">Teléfono</label>
-      <input type="text" class="form-control" id="telefono" formControlName="telefono" [ngClass]="{'is-invalid': submitted && f['telefono'].errors}">
-      <div *ngIf="submitted && f['telefono'].errors" class="invalid-feedback">El teléfono es requerido</div>
+      <input type="text" class="form-control" id="telefono" formControlName="telefono"
+             (input)="onTelefonoInput($event)"
+             [ngClass]="{'is-invalid': submitted && f['telefono'].errors}">
+      <div *ngIf="submitted && f['telefono'].errors" class="invalid-feedback">
+        <div *ngIf="f['telefono'].errors['required']">El teléfono es requerido.</div>
+        <div *ngIf="f['telefono'].errors['pattern']">Debe ser numérico y tener un máximo de 9 dígitos.</div>
+      </div>
     </div>
     <div class="mb-3">
       <label for="direccion" class="form-label">Dirección</label>
-      <input type="text" class="form-control" id="direccion" formControlName="direccion" [ngClass]="{'is-invalid': submitted && f['direccion'].errors}">
-      <div *ngIf="submitted && f['direccion'].errors" class="invalid-feedback">La dirección es requerida</div>
+      <input type="text" class="form-control" id="direccion" formControlName="direccion"
+             [ngClass]="{'is-invalid': submitted && f['direccion'].errors}">
+      <div *ngIf="submitted && f['direccion'].errors" class="invalid-feedback">La dirección es requerida.</div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancelar</button>
