@@ -17,15 +17,6 @@
       <div *ngIf="submitted && f['apellido'].errors" class="invalid-feedback">El apellido es requerido.</div>
     </div>
     <div class="mb-3">
-      <label for="correo" class="form-label">Correo</label>
-      <input type="email" class="form-control" id="correo" formControlName="correo"
-        [ngClass]="{'is-invalid': submitted && f['correo'].errors}">
-      <div *ngIf="submitted && f['correo'].errors" class="invalid-feedback">
-        <div *ngIf="f['correo'].errors['required']">El correo es requerido.</div>
-        <div *ngIf="f['correo'].errors['email']">Debe ingresar un correo válido.</div>
-      </div>
-    </div>
-    <div class="mb-3">
       <label for="telefono" class="form-label">Teléfono</label>
       <input type="text" class="form-control" id="telefono" formControlName="telefono" (input)="onTelefonoInput($event)"
         [ngClass]="{'is-invalid': submitted && f['telefono'].errors}">

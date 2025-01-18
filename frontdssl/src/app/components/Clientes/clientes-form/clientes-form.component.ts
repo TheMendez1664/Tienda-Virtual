@@ -28,10 +28,10 @@ export class ClientesFormComponent implements OnInit {
   initForm(): void {
     this.clienteForm = this.fb.group({
       id_cliente: [this.cliente?.id_cliente],
+      id_usuario: [this.cliente?.id_usuario || '', Validators.required], // Relación obligatoria
       nombre: [this.cliente?.nombre || '', Validators.required],
       apellido: [this.cliente?.apellido || '', Validators.required],
-      correo: [this.cliente?.correo || '', [Validators.required, Validators.email]],
-      telefono: [this.cliente?.telefono || '', [Validators.required, Validators.pattern(/^\d{1,9}$/)]],
+      telefono: [this.cliente?.telefono || '', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       direccion: [this.cliente?.direccion || '', Validators.required]
     });
   }
