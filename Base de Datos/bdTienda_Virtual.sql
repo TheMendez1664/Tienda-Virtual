@@ -1,264 +1,147 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: TiendaVirtual
--- ------------------------------------------------------
--- Server version	8.0.26
+create database tiendavirtual;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+use tiendavirtual;
 
---
--- Table structure for table `CarritoCompras`
---
+-- Tabla Usuario
+CREATE TABLE `Usuario` (
+  `id_usuario` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `correo` VARCHAR(255) UNIQUE NOT NULL,
+  `contraseña` VARCHAR(255) NOT NULL,
+  `rol` ENUM('cliente', 'admin') DEFAULT 'cliente',
+  `fecha_registro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `CarritoCompras`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `CarritoCompras` (
-  `id_carrito` int NOT NULL AUTO_INCREMENT,
-  `cliente_id` int NOT NULL,
-  `producto_id` int NOT NULL,
-  `cantidad` int NOT NULL,
-  PRIMARY KEY (`id_carrito`),
-  KEY `cliente_id` (`cliente_id`),
-  KEY `producto_id` (`producto_id`),
-  CONSTRAINT `CarritoCompras_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `Clientes` (`id_cliente`) ON DELETE CASCADE,
-  CONSTRAINT `CarritoCompras_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `Productos` (`id_producto`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Tabla Cliente
+CREATE TABLE `Cliente` (
+  `id_cliente` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id_usuario` INT UNIQUE NOT NULL,
+  `nombre` VARCHAR(255),
+  `apellido` VARCHAR(255),
+  `telefono` VARCHAR(15),
+  `direccion` TEXT,
+  FOREIGN KEY (`id_usuario`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `CarritoCompras`
---
-
-LOCK TABLES `CarritoCompras` WRITE;
-/*!40000 ALTER TABLE `CarritoCompras` DISABLE KEYS */;
-INSERT INTO `CarritoCompras` VALUES (1,1,2,1),(2,2,3,2),(3,3,1,1),(4,4,4,3),(5,5,5,2);
-/*!40000 ALTER TABLE `CarritoCompras` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Categorias`
---
-
-DROP TABLE IF EXISTS `Categorias`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+-- Tabla Categorias
 CREATE TABLE `Categorias` (
-  `id_categoria` int NOT NULL AUTO_INCREMENT,
-  `nombre_categoria` varchar(50) NOT NULL,
-  `descripcion` text,
-  PRIMARY KEY (`id_categoria`),
-  UNIQUE KEY `nombre_categoria` (`nombre_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id_categoria` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_categoria` VARCHAR(50) NOT NULL UNIQUE,
+  `descripcion` TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Categorias`
---
-
-LOCK TABLES `Categorias` WRITE;
-/*!40000 ALTER TABLE `Categorias` DISABLE KEYS */;
-INSERT INTO `Categorias` VALUES (1,'Electrónica','Dispositivos electrónicos y accesorios'),(2,'Hogar','Productos para el hogar y muebles'),(3,'Ropa','Prendas de vestir para todas las edades'),(4,'Juguetes','Juguetes para niños de todas las edades');
-/*!40000 ALTER TABLE `Categorias` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Clientes`
---
-
-DROP TABLE IF EXISTS `Clientes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Clientes` (
-  `id_cliente` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  `apellido` varchar(100) NOT NULL,
-  `correo` varchar(100) NOT NULL,
-  `telefono` varchar(15) DEFAULT NULL,
-  `direccion` varchar(255) DEFAULT NULL,
-  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_cliente`),
-  UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Clientes`
---
-
-LOCK TABLES `Clientes` WRITE;
-/*!40000 ALTER TABLE `Clientes` DISABLE KEYS */;
-INSERT INTO `Clientes` VALUES (1,'Lucía','Martínez','lucia.martinez@example.com','987654321','Calle Primavera 123','2025-01-09 07:28:30'),(2,'Pedro','García','pedro.garcia@example.com','123456789','Avenida Sol 456','2025-01-09 07:28:30'),(3,'Ana','López','ana.lopez@example.com','567890123','Pasaje Luna 789','2025-01-09 07:28:30'),(4,'Javier','Hernández','javier.hernandez@example.com','987321654','Calle Estrella 321','2025-01-09 07:28:30'),(5,'Carla','Fernández','carla.fernandez@example.com','654987321','Avenida Mar 654','2025-01-09 07:28:30');
-/*!40000 ALTER TABLE `Clientes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `DetallesOrden`
---
-
-DROP TABLE IF EXISTS `DetallesOrden`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `DetallesOrden` (
-  `id_detalle` int NOT NULL AUTO_INCREMENT,
-  `orden_id` int NOT NULL,
-  `producto_id` int NOT NULL,
-  `cantidad` int NOT NULL,
-  `precio_unitario` decimal(10,2) NOT NULL,
-  `subtotal` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id_detalle`),
-  KEY `orden_id` (`orden_id`),
-  KEY `producto_id` (`producto_id`),
-  CONSTRAINT `DetallesOrden_ibfk_1` FOREIGN KEY (`orden_id`) REFERENCES `Ordenes` (`id_orden`) ON DELETE CASCADE,
-  CONSTRAINT `DetallesOrden_ibfk_2` FOREIGN KEY (`producto_id`) REFERENCES `Productos` (`id_producto`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `DetallesOrden`
---
-
-LOCK TABLES `DetallesOrden` WRITE;
-/*!40000 ALTER TABLE `DetallesOrden` DISABLE KEYS */;
-INSERT INTO `DetallesOrden` VALUES (1,1,1,1,999.99,999.99),(2,1,3,2,129.99,259.98),(3,2,2,1,699.99,699.99),(4,3,5,1,29.99,29.99),(5,4,3,1,129.99,129.99),(6,4,4,1,49.99,49.99),(7,5,1,1,999.99,999.99);
-/*!40000 ALTER TABLE `DetallesOrden` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `HistorialPagos`
---
-
-DROP TABLE IF EXISTS `HistorialPagos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `HistorialPagos` (
-  `id_pago` int NOT NULL AUTO_INCREMENT,
-  `orden_id` int NOT NULL,
-  `fecha_pago` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `monto` decimal(10,2) NOT NULL,
-  `metodo_pago` enum('tarjeta','paypal','transferencia') NOT NULL,
-  PRIMARY KEY (`id_pago`),
-  KEY `orden_id` (`orden_id`),
-  CONSTRAINT `HistorialPagos_ibfk_1` FOREIGN KEY (`orden_id`) REFERENCES `Ordenes` (`id_orden`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `HistorialPagos`
---
-
-LOCK TABLES `HistorialPagos` WRITE;
-/*!40000 ALTER TABLE `HistorialPagos` DISABLE KEYS */;
-INSERT INTO `HistorialPagos` VALUES (1,1,'2025-01-09 07:28:30',1299.98,'tarjeta'),(2,4,'2025-01-09 07:28:30',179.98,'paypal');
-/*!40000 ALTER TABLE `HistorialPagos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Ordenes`
---
-
-DROP TABLE IF EXISTS `Ordenes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Ordenes` (
-  `id_orden` int NOT NULL AUTO_INCREMENT,
-  `cliente_id` int NOT NULL,
-  `fecha_orden` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `estado` enum('pendiente','completada','cancelada') DEFAULT 'pendiente',
-  `total` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id_orden`),
-  KEY `cliente_id` (`cliente_id`),
-  CONSTRAINT `Ordenes_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `Clientes` (`id_cliente`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Ordenes`
---
-
-LOCK TABLES `Ordenes` WRITE;
-/*!40000 ALTER TABLE `Ordenes` DISABLE KEYS */;
-INSERT INTO `Ordenes` VALUES (1,1,'2025-01-09 07:28:30','completada',1299.98),(2,2,'2025-01-09 07:28:30','pendiente',699.99),(3,3,'2025-01-09 07:28:30','cancelada',29.99),(4,4,'2025-01-09 07:28:30','completada',179.98),(5,5,'2025-01-09 07:28:30','pendiente',999.99);
-/*!40000 ALTER TABLE `Ordenes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Productos`
---
-
-DROP TABLE IF EXISTS `Productos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+-- Tabla Productos
 CREATE TABLE `Productos` (
-  `id_producto` int NOT NULL AUTO_INCREMENT,
-  `nombre_producto` varchar(100) NOT NULL,
-  `descripcion` text,
-  `precio` decimal(10,2) NOT NULL,
-  `stock` int NOT NULL,
-  `imagen` blob,
-  `categoria_id` int NOT NULL,
-  PRIMARY KEY (`id_producto`),
-  KEY `categoria_id` (`categoria_id`),
-  CONSTRAINT `Productos_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `Categorias` (`id_categoria`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id_producto` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_producto` VARCHAR(100) NOT NULL,
+  `descripcion` TEXT,
+  `precio` DECIMAL(10,2) NOT NULL,
+  `stock` INT NOT NULL,
+  `imagen` BLOB,
+  `categoria_id` INT NOT NULL,
+  FOREIGN KEY (`categoria_id`) REFERENCES `Categorias`(`id_categoria`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Productos`
---
+-- Tabla CarritoCompras
+CREATE TABLE `CarritoCompras` (
+  `id_carrito` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cliente_id` INT NOT NULL,
+  `producto_id` INT NOT NULL,
+  `cantidad` INT NOT NULL,
+  FOREIGN KEY (`cliente_id`) REFERENCES `Cliente`(`id_cliente`) ON DELETE CASCADE,
+  FOREIGN KEY (`producto_id`) REFERENCES `Productos`(`id_producto`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-LOCK TABLES `Productos` WRITE;
-/*!40000 ALTER TABLE `Productos` DISABLE KEYS */;
-INSERT INTO `Productos` VALUES (1,'Smartphone Galaxy S21','Teléfono móvil de alta gama con pantalla AMOLED',999.99,20,NULL,1),(2,'TV LED 55\"','Televisor LED de 55 pulgadas con resolución 4K',699.99,15,NULL,1),(3,'Silla Ergonómica','Silla de oficina ajustable y cómoda',129.99,50,NULL,2),(4,'Vestido Floral','Vestido de verano con diseño floral',49.99,70,NULL,3),(5,'Auto de Juguete','Auto a control remoto con batería recargable',29.99,40,NULL,4);
-/*!40000 ALTER TABLE `Productos` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Tabla Ordenes
+CREATE TABLE `Ordenes` (
+  `id_orden` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `cliente_id` INT NOT NULL,
+  `fecha_orden` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `estado` ENUM('pendiente', 'completada', 'cancelada') DEFAULT 'pendiente',
+  `total` DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (`cliente_id`) REFERENCES `Cliente`(`id_cliente`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `Usuarios`
---
+-- Tabla DetallesOrden
+CREATE TABLE `DetallesOrden` (
+  `id_detalle` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `orden_id` INT NOT NULL,
+  `producto_id` INT NOT NULL,
+  `cantidad` INT NOT NULL,
+  `precio_unitario` DECIMAL(10,2) NOT NULL,
+  `subtotal` DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (`orden_id`) REFERENCES `Ordenes`(`id_orden`) ON DELETE CASCADE,
+  FOREIGN KEY (`producto_id`) REFERENCES `Productos`(`id_producto`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `Usuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Usuarios` (
-  `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `nombre_usuario` varchar(50) NOT NULL,
-  `contraseña` varchar(255) NOT NULL,
-  `rol` enum('admin','cliente') NOT NULL,
-  `correo` varchar(100) NOT NULL,
-  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_usuario`),
-  UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
-  UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Tabla HistorialPagos
+CREATE TABLE `HistorialPagos` (
+  `id_pago` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `orden_id` INT NOT NULL,
+  `fecha_pago` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `monto` DECIMAL(10,2) NOT NULL,
+  `metodo_pago` ENUM('tarjeta', 'paypal', 'transferencia') NOT NULL,
+  FOREIGN KEY (`orden_id`) REFERENCES `Ordenes`(`id_orden`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Usuarios`
---
+-- Datos de Ejemplo
 
-LOCK TABLES `Usuarios` WRITE;
-/*!40000 ALTER TABLE `Usuarios` DISABLE KEYS */;
-INSERT INTO `Usuarios` VALUES (1,'kevin','1664','admin','kevin_ruiz_sanchez@hotmail.com','2025-01-09 07:28:30'),(2,'bill','bill1234','admin','borybill@hotmail.com','2025-01-09 07:28:30'),(3,'lucia_martinez','lucia1234','cliente','lucia.martinez@hotmail.com','2025-01-09 07:28:30'),(4,'pedro_garcia','pedro1234','cliente','pedro.garcia@hotmail.com','2025-01-09 07:28:30'),(5,'ana_lopez','ana1234','cliente','ana.lopez@hotmail.com','2025-01-09 07:28:30');
-/*!40000 ALTER TABLE `Usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `Usuario` (correo, contraseña, rol) VALUES
+('cliente1@example.com', 'cliente123', 'cliente'),
+('cliente2@example.com', 'cliente456', 'cliente'),
+('admin1@example.com', 'admin123', 'admin'),
+('cliente3@example.com', 'cliente789', 'cliente');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+INSERT INTO `Cliente` (id_usuario, nombre, apellido, telefono, direccion) VALUES
+(1, 'Juan', 'Pérez', '987654321', 'Calle Primavera 123'),
+(2, 'María', 'López', '912345678', 'Avenida Sol 456'),
+(4, 'Carlos', 'Gómez', '921234567', 'Pasaje Luna 789');
 
--- Dump completed on 2025-01-15  7:28:29
+INSERT INTO `Categorias` (nombre_categoria, descripcion) VALUES
+('Electrónica', 'Dispositivos electrónicos y accesorios'),
+('Hogar', 'Productos para el hogar y muebles'),
+('Ropa', 'Prendas de vestir para todas las edades'),
+('Juguetes', 'Juguetes para niños de todas las edades');
+
+INSERT INTO `Productos` (nombre_producto, descripcion, precio, stock, imagen, categoria_id) VALUES
+('Smartphone Galaxy S21', 'Teléfono móvil de alta gama con pantalla AMOLED', 999.99, 20, NULL, 1),
+('TV LED 55"', 'Televisor LED de 55 pulgadas con resolución 4K', 699.99, 15, NULL, 1),
+('Silla Ergonómica', 'Silla de oficina ajustable y cómoda', 129.99, 50, NULL, 2),
+('Vestido Floral', 'Vestido de verano con diseño floral', 49.99, 70, NULL, 3),
+('Auto de Juguete', 'Auto a control remoto con batería recargable', 29.99, 40, NULL, 4),
+('Auriculares Bluetooth', 'Auriculares inalámbricos con cancelación de ruido', 199.99, 30, NULL, 1),
+('Laptop Gamer', 'Laptop de alto rendimiento con tarjeta gráfica dedicada', 1499.99, 10, NULL, 1),
+('Cámara Reflex', 'Cámara profesional con lente de 18-55mm', 799.99, 25, NULL, 1),
+('Tablet 10"', 'Tablet con pantalla HD y 64GB de almacenamiento', 299.99, 40, NULL, 1),
+('Mesa de Centro', 'Mesa de madera para sala de estar', 89.99, 20, NULL, 2),
+('Sofá 3 Plazas', 'Sofá moderno y cómodo para tres personas', 499.99, 15, NULL, 2),
+('Lámpara de Techo', 'Lámpara de techo con diseño minimalista', 129.99, 50, NULL, 2),
+('Aspiradora', 'Aspiradora potente y silenciosa con filtro HEPA', 249.99, 25, NULL, 2),
+('Camisa Casual', 'Camisa de algodón en varios colores', 19.99, 100, NULL, 3),
+('Pantalón Deportivo', 'Pantalón de poliéster para actividades físicas', 24.99, 80, NULL, 3),
+('Zapatillas Running', 'Zapatillas ligeras para correr', 59.99, 60, NULL, 3),
+('Chaqueta de Invierno', 'Chaqueta acolchada para bajas temperaturas', 99.99, 50, NULL, 3),
+('Muñeca Articulada', 'Muñeca con accesorios y ropa intercambiable', 39.99, 70, NULL, 4),
+('Bloques de Construcción', 'Set de bloques para armar edificios y vehículos', 49.99, 100, NULL, 4),
+('Rompecabezas 1000 Piezas', 'Rompecabezas temático para toda la familia', 29.99, 50, NULL, 4),
+('Drone para Niños', 'Drone pequeño y fácil de usar con cámara integrada', 79.99, 30, NULL, 4);
+
+INSERT INTO `CarritoCompras` (cliente_id, producto_id, cantidad) VALUES
+(1, 1, 2),
+(1, 3, 1),
+(2, 2, 1),
+(3, 4, 3);
+
+INSERT INTO `Ordenes` (cliente_id, fecha_orden, estado, total) VALUES
+(1, NOW(), 'pendiente', 1259.98),
+(2, NOW(), 'completada', 699.99),
+(3, NOW(), 'cancelada', 149.97);
+
+INSERT INTO `DetallesOrden` (orden_id, producto_id, cantidad, precio_unitario, subtotal) VALUES
+(1, 1, 2, 999.99, 1999.98),
+(1, 3, 1, 129.99, 129.99),
+(2, 2, 1, 699.99, 699.99),
+(3, 4, 3, 49.99, 149.97);
+
+INSERT INTO `HistorialPagos` (orden_id, monto, metodo_pago) VALUES
+(1, 1259.98, 'tarjeta'),
+(2, 699.99, 'paypal');

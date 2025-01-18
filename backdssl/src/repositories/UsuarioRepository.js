@@ -1,5 +1,6 @@
 const CrudRepository = require('../lib/CrudRepository');
 const Usuario = require('../models/Usuario');
+const ClienteRepository = require('./ClienteRepository');
 
 class UsuarioRepository extends CrudRepository {
     constructor() {
@@ -39,7 +40,6 @@ class UsuarioRepository extends CrudRepository {
         }
     }
 
-    // Métodos específicos
     async findByRole(role) {
         try {
             const [rows] = await this.pool.query(`
@@ -61,6 +61,38 @@ class UsuarioRepository extends CrudRepository {
         } catch (error) {
             console.error(`Error en findByEmail (Usuario): ${error.message}`);
             throw error;
+        }
+    }
+
+    // Nuevo método para crear Usuario y Cliente relacionados
+    async createUsuarioConCliente(usuarioData, clienteData) {
+        const connection = await this.pool.getConnection();
+        try {
+            await connection.beginTransaction();
+
+            // Crear usuario
+            const [resultUsuario] = await connection.query(
+                `INSERT INTO ${this.tableName} SET ?`,
+                usuarioData
+            );
+
+            const id_usuario = resultUsuario.insertId;
+
+            // Crear cliente relacionado
+            await ClienteRepository.create({
+                ...clienteData,
+                id_usuario
+            });
+
+            await connection.commit();
+
+            return { id_usuario, ...usuarioData };
+        } catch (error) {
+            await connection.rollback();
+            console.error(`Error en createUsuarioConCliente: ${error.message}`);
+            throw error;
+        } finally {
+            connection.release();
         }
     }
 }

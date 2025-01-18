@@ -1,4 +1,5 @@
 const usuarioRepository = require('../repositories/UsuarioRepository');
+const clienteRepository = require('../repositories/ClienteRepository');
 
 class UsuarioService {
     async getAllUsuarios() {
@@ -13,8 +14,13 @@ class UsuarioService {
         return usuario;
     }
 
-    async createUsuario(usuarioData) {
-        return await usuarioRepository.create(usuarioData);
+    async createUsuarioConCliente(usuarioData, clienteData) {
+        try {
+            return await usuarioRepository.createUsuarioConCliente(usuarioData, clienteData);
+        } catch (error) {
+            console.error(`Error en createUsuarioConCliente (UsuarioService): ${error.message}`);
+            throw new Error('No se pudo crear el usuario con cliente asociado');
+        }
     }
 
     async updateUsuario(id, usuarioData) {
@@ -33,12 +39,16 @@ class UsuarioService {
         return await usuarioRepository.delete(id);
     }
 
-    async getUsuariosByRole(rol) {
-        const usuarios = await usuarioRepository.findByRole(rol);
-        if (!usuarios.length) {
-            throw new Error('No se encontraron usuarios con este rol');
+    async getUsuarioByEmail(email) {
+        const usuario = await usuarioRepository.findByEmail(email);
+        if (!usuario) {
+            throw new Error('Usuario no encontrado');
         }
-        return usuarios;
+        return usuario;
+    }
+
+    async getUsuariosByRole(role) {
+        return await usuarioRepository.findByRole(role);
     }
 }
 

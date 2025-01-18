@@ -39,7 +39,6 @@ class OrdenRepository extends CrudRepository {
         }
     }
 
-    // Ejemplo de método específico
     async findByClient(clienteId) {
         try {
             const [rows] = await this.pool.query(`

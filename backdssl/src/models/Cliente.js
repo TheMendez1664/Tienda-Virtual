@@ -1,15 +1,15 @@
 class Cliente {
-    static tableName = 'Clientes';
-
-    constructor(id_cliente, nombre, apellido, correo, telefono, direccion, fecha_registro) {
-        this.id_cliente = id_cliente;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.fecha_registro = fecha_registro;
+    static tableName = 'Cliente';
+  
+    constructor(id_cliente, id_usuario, nombre, apellido, telefono, direccion) {
+      this.id_cliente = id_cliente;
+      this.id_usuario = id_usuario;
+      this.nombre = nombre;
+      this.apellido = apellido;
+      this.telefono = telefono;
+      this.direccion = direccion;
     }
-}
-
-module.exports = Cliente;
+  }
+  
+  module.exports = Cliente;
+  

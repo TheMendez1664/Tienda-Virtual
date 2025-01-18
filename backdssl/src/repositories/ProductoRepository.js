@@ -39,7 +39,6 @@ class ProductoRepository extends CrudRepository {
         }
     }
 
-    // Ejemplo de método específico
     async findByCategory(categoria_id) {
         try {
             const [rows] = await this.pool.query(`

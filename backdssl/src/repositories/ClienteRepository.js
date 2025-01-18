@@ -17,6 +17,17 @@ class ClienteRepository extends CrudRepository {
         }
     }
 
+    async findByUserId(id_usuario) {
+        try {
+            const sql = `SELECT * FROM ${this.tableName} WHERE id_usuario = ?`;
+            const [rows] = await this.pool.query(sql, [id_usuario]);
+            return rows[0] || null;
+        } catch (error) {
+            console.error(`Error en findByUserId (Cliente): ${error.message}`);
+            throw error;
+        }
+    }
+
     async update(id, data) {
         try {
             const sql = `UPDATE ${this.tableName} SET ? WHERE id_cliente = ?`;
@@ -39,7 +50,6 @@ class ClienteRepository extends CrudRepository {
         }
     }
 
-    // Ejemplo de método específico
     async findByEmail(correo) {
         try {
             const [rows] = await this.pool.query(`

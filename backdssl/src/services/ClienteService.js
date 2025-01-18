@@ -33,12 +33,8 @@ class ClienteService {
         return await clienteRepository.delete(id);
     }
 
-    async getClienteByEmail(correo) {
-        const cliente = await clienteRepository.findByEmail(correo);
-        if (!cliente) {
-            throw new Error('Cliente no encontrado');
-        }
-        return cliente;
+    async getClienteByEmail(email) {
+        return await clienteRepository.findByEmail(email);
     }
 }
 

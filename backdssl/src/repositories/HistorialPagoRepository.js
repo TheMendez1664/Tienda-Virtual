@@ -39,7 +39,6 @@ class HistorialPagoRepository extends CrudRepository {
         }
     }
 
-    // Ejemplo de método específico
     async findByOrder(ordenId) {
         try {
             const sql = `SELECT * FROM ${this.tableName} WHERE orden_id = ?`;

@@ -6,7 +6,6 @@ class CategoriaRepository extends CrudRepository {
         super(Categoria);
     }
 
-    // Sobrescribimos findById
     async findById(id) {
         try {
             const sql = `SELECT * FROM ${this.tableName} WHERE id_categoria = ?`;
@@ -18,7 +17,6 @@ class CategoriaRepository extends CrudRepository {
         }
     }
 
-    // Sobrescribimos update
     async update(id, data) {
         try {
             const sql = `UPDATE ${this.tableName} SET ? WHERE id_categoria = ?`;
@@ -30,7 +28,6 @@ class CategoriaRepository extends CrudRepository {
         }
     }
 
-    // Sobrescribimos delete
     async delete(id) {
         try {
             const sql = `DELETE FROM ${this.tableName} WHERE id_categoria = ?`;
@@ -42,7 +39,6 @@ class CategoriaRepository extends CrudRepository {
         }
     }
 
-    // Método específico
     async findByName(nombre_categoria) {
         try {
             const [rows] = await this.pool.query(`

@@ -3,11 +3,8 @@ const Carrito = require('../models/Carrito');
 
 class CarritoRepository extends CrudRepository {
     constructor() {
-        // Llamamos al constructor padre sin modificar CrudRepository
         super(Carrito);
     }
-
-    // Sobrescribimos findById
     async findById(id) {
         try {
             const sql = `SELECT * FROM ${this.tableName} WHERE id_carrito = ?`;
@@ -19,7 +16,6 @@ class CarritoRepository extends CrudRepository {
         }
     }
 
-    // Sobrescribimos update
     async update(id, data) {
         try {
             const sql = `UPDATE ${this.tableName} SET ? WHERE id_carrito = ?`;
@@ -31,7 +27,6 @@ class CarritoRepository extends CrudRepository {
         }
     }
 
-    // Sobrescribimos delete
     async delete(id) {
         try {
             const sql = `DELETE FROM ${this.tableName} WHERE id_carrito = ?`;
@@ -43,7 +38,6 @@ class CarritoRepository extends CrudRepository {
         }
     }
 
-    // Métodos específicos
     async findByClient(clienteId) {
         try {
             const [rows] = await this.pool.query(`
