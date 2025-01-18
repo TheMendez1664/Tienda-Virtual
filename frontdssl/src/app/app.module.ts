@@ -14,6 +14,11 @@ import { CategoriaListComponent } from './components/categoria/categoria-list/ca
 // Componentes de Producto
 import { ProductoFormComponent } from './components/producto/producto-form/producto-form.component';
 import { ProductoListComponent } from './components/producto/producto-list/producto-list.component';
+import { ClientesFormComponent } from './components/Clientes/clientes-form/clientes-form.component';
+import { ClientesListComponent } from './components/Clientes/clientes-list/clientes-list.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -21,7 +26,10 @@ import { ProductoListComponent } from './components/producto/producto-list/produ
     CategoriaFormComponent,
     CategoriaListComponent,
     ProductoFormComponent,
-    ProductoListComponent
+    ProductoListComponent,
+    ClientesFormComponent,
+    ClientesListComponent,
+
   ],
   imports: [
     BrowserModule,

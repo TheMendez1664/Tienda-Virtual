@@ -5,6 +5,5 @@ export interface Cliente {
     correo: string;
     telefono: string;
     direccion: string;
-    fecha_registro: Date;
   }
   

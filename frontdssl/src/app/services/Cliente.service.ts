@@ -4,30 +4,26 @@ import { Observable } from 'rxjs';
 import { Cliente } from '../models/Cliente.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://localhost:3000/api/clientes';
+  private apiUrlClientes = 'http://localhost:3000/api/clientes';
 
   constructor(private http: HttpClient) {}
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.apiUrl);
+    return this.http.get<Cliente[]>(this.apiUrlClientes);
   }
 
-  getClienteById(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
+  createCliente(cliente: Cliente): Observable<any> {
+    return this.http.post(this.apiUrlClientes, cliente);
   }
 
-  createCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(this.apiUrl, cliente);
+  updateCliente(id: number, cliente: Cliente): Observable<any> {
+    return this.http.put(`${this.apiUrlClientes}/${id}`, cliente);
   }
 
-  updateCliente(id: number, cliente: Cliente): Observable<Cliente> {
-    return this.http.put<Cliente>(`${this.apiUrl}/${id}`, cliente);
-  }
-
-  deleteCliente(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteCliente(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrlClientes}/${id}`);
   }
 }

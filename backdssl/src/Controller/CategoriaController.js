@@ -25,22 +25,24 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const newCategoria = await categoriaService.createCategoria(req.body);
-        res.status(201).json(newCategoria);
+        const nuevoCliente = await clienteService.createCliente(req.body);
+        res.status(201).json(nuevoCliente);
     } catch (error) {
-        res.status(500).json({ message: 'Error al crear la categoría', error: error.message });
+        res.status(500).json({ message: 'Error al crear cliente', error: error.message });
     }
 });
 
+
 router.put('/:id', async (req, res) => {
     try {
-        const updatedCategoria = await categoriaService.updateCategoria(req.params.id, req.body);
-        if (!updatedCategoria) {
-            return res.status(404).json({ message: 'Categoría no encontrada' });
+        const clienteActualizado = await clienteService.updateCliente(req.params.id, req.body);
+        if (clienteActualizado) {
+            res.json(clienteActualizado);
+        } else {
+            res.status(404).json({ message: 'Cliente no encontrado' });
         }
-        res.json(updatedCategoria);
     } catch (error) {
-        res.status(500).json({ message: 'Error al actualizar la categoría', error: error.message });
+        res.status(500).json({ message: 'Error al actualizar cliente', error: error.message });
     }
 });
 

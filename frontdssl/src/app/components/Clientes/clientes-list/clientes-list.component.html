@@ -1,0 +1,29 @@
+<div class="container">
+  <h3>Gestión de Clientes</h3>
+  <button class="btn btn-primary mb-3" (click)="openClienteModal()">Agregar Nuevo Cliente</button>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.apellido }}</td>
+        <td>{{ cliente.correo }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="openClienteModal(cliente)">Editar</button>
+          <button class="btn btn-danger" (click)="eliminarCliente(cliente.id_cliente)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
