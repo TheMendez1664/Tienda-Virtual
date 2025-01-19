@@ -14,8 +14,14 @@ import { CategoriaListComponent } from './components/categoria/categoria-list/ca
 // Componentes de Producto
 import { ProductoFormComponent } from './components/producto/producto-form/producto-form.component';
 import { ProductoListComponent } from './components/producto/producto-list/producto-list.component';
+
+// Componentes de Clientes
 import { ClientesFormComponent } from './components/Clientes/clientes-form/clientes-form.component';
 import { ClientesListComponent } from './components/Clientes/clientes-list/clientes-list.component';
+
+// Componentes de Usuarios
+import { UsuariosListComponent } from './components/usuarios/usuarios-list/usuarios-list.component';
+import { UsuariosFormComponent } from './components/usuarios/usuarios-form/usuarios-form.component';
 
 
 
@@ -23,12 +29,18 @@ import { ClientesListComponent } from './components/Clientes/clientes-list/clien
 @NgModule({
   declarations: [
     AppComponent,
+
     CategoriaFormComponent,
     CategoriaListComponent,
+
     ProductoFormComponent,
     ProductoListComponent,
+    
     ClientesFormComponent,
     ClientesListComponent,
+    
+    UsuariosListComponent,
+    UsuariosFormComponent,
 
   ],
   imports: [

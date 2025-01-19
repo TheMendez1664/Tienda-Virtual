@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ isEditMode ? 'Editar Usuario' : 'Registrar Usuario' }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input type="email" class="form-control" id="correo" formControlName="correo" [ngClass]="{'is-invalid': submitted && f['correo'].errors}">
+        <div *ngIf="submitted && f['correo'].errors" class="invalid-feedback">El correo es requerido</div>
+      </div>
+      <div class="mb-3">
+        <label for="contraseña" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="contraseña" formControlName="contraseña" [ngClass]="{'is-invalid': submitted && f['contraseña'].errors}">
+        <div *ngIf="submitted && f['contraseña'].errors" class="invalid-feedback">La contraseña es requerida</div>
+      </div>
+      <div class="mb-3">
+        <label for="rol" class="form-label">Rol</label>
+        <select class="form-control" id="rol" formControlName="rol">
+          <option value="cliente">Cliente</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Actualizar' : 'Registrar' }}</button>
+      </div>
+    </form>
+  </div>
+  

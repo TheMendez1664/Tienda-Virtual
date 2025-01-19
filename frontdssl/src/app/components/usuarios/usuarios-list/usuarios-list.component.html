@@ -1,0 +1,24 @@
+<div class="container">
+    <h3>Gestión de Usuarios</h3>
+    <button class="btn btn-primary mb-3" (click)="openUsuarioModal()">Agregar Usuario</button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Correo</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.rol }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="editarUsuario(usuario)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.id_usuario)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

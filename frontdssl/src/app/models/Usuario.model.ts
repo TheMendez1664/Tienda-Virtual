@@ -1,9 +1,7 @@
 export interface Usuario {
-    id_usuario: number;
-    nombre_usuario: string;
-    contraseña: string;
-    rol: string;
-    correo: string;
-    fecha_registro: Date;
-  }
-  
+  id_usuario: number;
+  correo: string;
+  contraseña: string;
+  rol: 'cliente' | 'admin';
+  fecha_registro: Date;
+}
