@@ -42,7 +42,9 @@ class UsuarioRepository extends CrudRepository {
 
     async findByRole(role) {
         try {
-            const [rows] = await this.pool.query(`SELECT * FROM ${this.tableName} WHERE rol = ?`, [role]);
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${this.tableName} WHERE rol = ?
+            `, [role]);
             return rows;
         } catch (error) {
             console.error(`Error en findByRole: ${error.message}`);
@@ -52,7 +54,9 @@ class UsuarioRepository extends CrudRepository {
 
     async findByEmail(email) {
         try {
-            const [rows] = await this.pool.query(`SELECT * FROM ${this.tableName} WHERE correo = ?`, [email]);
+            const [rows] = await this.pool.query(`
+                SELECT * FROM ${this.tableName} WHERE correo = ?
+            `, [email]);
             return rows[0] || null;
         } catch (error) {
             console.error(`Error en findByEmail (Usuario): ${error.message}`);
@@ -60,27 +64,28 @@ class UsuarioRepository extends CrudRepository {
         }
     }
 
+    // Nuevo método para crear Usuario y Cliente relacionados
     async createUsuarioConCliente(usuarioData, clienteData) {
         const connection = await this.pool.getConnection();
         try {
             await connection.beginTransaction();
-    
+
             // Crear usuario
             const [resultUsuario] = await connection.query(
                 `INSERT INTO ${this.tableName} SET ?`,
                 usuarioData
             );
-    
+
             const id_usuario = resultUsuario.insertId;
-    
-            // Crear cliente con el id_usuario recién creado
+
+            // Crear cliente relacionado
             await ClienteRepository.create({
                 ...clienteData,
                 id_usuario
             });
-    
+
             await connection.commit();
-    
+
             return { id_usuario, ...usuarioData };
         } catch (error) {
             await connection.rollback();
@@ -90,7 +95,6 @@ class UsuarioRepository extends CrudRepository {
             connection.release();
         }
     }
-    
 }
 
 module.exports = new UsuarioRepository();
