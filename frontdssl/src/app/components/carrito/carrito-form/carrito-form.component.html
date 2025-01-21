@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ isEditMode ? 'Editar Carrito' : 'Agregar al Carrito' }}</h4>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="carritoForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+          <label for="cliente_id" class="form-label">ID Cliente</label>
+          <input type="number" class="form-control" formControlName="cliente_id">
+      </div>
+      <div class="mb-3">
+          <label for="producto_id" class="form-label">ID Producto</label>
+          <input type="number" class="form-control" formControlName="producto_id">
+      </div>
+      <div class="mb-3">
+          <label for="cantidad" class="form-label">Cantidad</label>
+          <input type="number" class="form-control" formControlName="cantidad">
+      </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+  </form>
+</div>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Carrito } from '../models/Carrito.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CarritoService {
   private apiUrl = 'http://localhost:3000/api/carrito';
@@ -29,9 +29,5 @@ export class CarritoService {
 
   deleteCarrito(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  clearCarrito(clienteId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/clear/${clienteId}`);
   }
 }

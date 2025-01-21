@@ -1,0 +1,25 @@
+<div class="container">
+  <h3>Gestión de Carrito</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID Carrito</th>
+        <th>ID Cliente</th>
+        <th>ID Producto</th>
+        <th>Cantidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let carrito of carritos">
+        <td>{{ carrito.id_carrito }}</td>
+        <td>{{ carrito.cliente_id }}</td>
+        <td>{{ carrito.producto_id }}</td>
+        <td>{{ carrito.cantidad }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteCarrito(carrito.id_carrito)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

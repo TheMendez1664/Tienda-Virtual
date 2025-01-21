@@ -1,21 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriaListComponent } from './components/categoria/categoria-list/categoria-list.component';
-import { ProductoListComponent } from './components/producto/producto-list/producto-list.component';
-import { ClientesListComponent } from './components/Clientes/clientes-list/clientes-list.component';
-import { UsuariosListComponent } from './components/usuarios/usuarios-list/usuarios-list.component';
-
+import { PagPrincipalComponent } from './components/PagPrincipalComponent/pag-principal.component';
+import { ProductosComponent } from './components/ProductosComponent/productos.component';
+import { DetalleProductoComponent } from './components/DetalleProductoComponent/detalle-producto.component';
+import { CarritoComponent } from './components/CarritoComponent/carrito.component';
+import { DetalleCarritoComponent } from './components/DetalleCarritoComponent/detalle-carrito.component';
+import { LoginComponent } from './components/LoginComponent/login.component';
+import { BusquedaComponent } from './components/BusquedaComponent/busqueda.component';
 
 const routes: Routes = [
-    { path: 'categorias', component: CategoriaListComponent },
-    { path: 'productos', component: ProductoListComponent },
-    { path: 'clientes', component: ClientesListComponent },
-    { path: 'usuarios', component: UsuariosListComponent },
-    { path: '', redirectTo: '/categorias', pathMatch: 'full' } // Redirige a categorías por defecto
+  { path: '', redirectTo: '/pagina-principal', pathMatch: 'full' },
+  { path: 'pagina-principal', component: PagPrincipalComponent },
+  { path: 'productos', component: ProductosComponent },
+  { path: 'productos/:id', component: DetalleProductoComponent },
+  { path: 'carrito', component: CarritoComponent },
+  { path: 'detalle-carrito', component: DetalleCarritoComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'busqueda', component: BusquedaComponent },
+  { path: '**', redirectTo: '/pagina-principal' }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
